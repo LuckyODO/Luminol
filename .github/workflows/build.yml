@@ -40,13 +40,15 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config user.name "GitHub Actions"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
       - name: Build Luminol
         run: |
           chmod +x gradlew scripts/*.sh
-          ./scripts/setup_and_build.sh
+          bash -e ./scripts/setup_maple_pile.sh
+          ./gradlew --refresh-dependencies applyAllPatches
+          ./gradlew --refresh-dependencies createPaperclipJar
 
       - name: Generate checksums
         shell: bash
